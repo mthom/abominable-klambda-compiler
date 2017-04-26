@@ -9,7 +9,7 @@ March 2015, and is a cautionary lesson in the importance of
 documenting your code as a key to later understanding of that code.
 
 Abominable is responsible for generating the backend of
-[Shentong](https://github.com/mthom/shentong), a Haskell port
+[[Shentong][https://github.com/mthom/shentong], a Haskell port
 of the Shen programming language.
 
 Abominable is incapable of generating code that can be parsed with any
