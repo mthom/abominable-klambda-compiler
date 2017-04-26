@@ -1,0 +1,43 @@
+#+TITLE:	Abominable KLambda->Haskell Compiler
+#+AUTHOR:	Mark Thom
+#+EMAIL:	markjordanthom@gmail.com
+
+* A hastily written, undocumented KLambda->Haskell Compiler
+
+Abominable converts KLambda code to Haskell code. It was written in
+March 2015, and is a cautionary lesson in the importance of
+documenting your code as a key to later understanding of that code.
+
+Abominable is responsible for generating the backend of
+[Shentong](https://github.com/mthom/shentong), a Haskell port
+of the Shen programming language.
+
+Abominable is incapable of generating code that can be parsed with any
+GHC version later than 7.6.3. This seems to be due to a lingering bug
+in Template Haskell.
+
+* Usage
+
+Abominable reads from a list of files specified in Compiler/Backend.hs :
+
+#+BEGIN_SRC Haskell
+klFiles = [ "klambda/toplevel.kl"
+          , "klambda/core.kl"
+          , "klambda/sys.kl"
+          , "klambda/sequent.kl"
+          , "klambda/yacc.kl"
+          , "klambda/reader.kl"
+          , "klambda/prolog.kl"
+          , "klambda/track.kl"
+          , "klambda/load.kl"
+          , "klambda/writer.kl"
+          , "klambda/macros.kl"  
+          , "klambda/declarations.kl"
+          , "klambda/types.kl"
+          , "klambda/t-star.kl"]
+#+END_SRC
+
+All paths are relative to the directory in which Abominable is stored.
+The Backend *.hs files are output to Shentong/Backend, and if that
+directly doesn't already exist in the pwd, Abominable throws an
+exception and returns to the command line.
