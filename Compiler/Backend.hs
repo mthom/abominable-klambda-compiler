@@ -44,10 +44,10 @@ hPutModuleLn h moduleName modules = do
   T.hPutStrLn h "import Control.Monad.Except"
   T.hPutStrLn h "import Control.Parallel"
   T.hPutStrLn h "import Environment"
-  T.hPutStrLn h "import Primitives as Primitives"
+  T.hPutStrLn h "import Core.Primitives as Primitives"
   T.hPutStrLn h "import Backend.Utils"
-  T.hPutStrLn h "import Types as Types"
-  T.hPutStrLn h "import Utils"
+  T.hPutStrLn h "import Core.Types"
+  T.hPutStrLn h "import Core.Utils"
   T.hPutStrLn h "import Wrap"
   
   mapM_ (\modName -> T.hPutStrLn h ("import " <> modName)) modules
@@ -106,12 +106,13 @@ writeInsertFunctionCode :: Symbol -> Symbol -> Table -> [Symbol] -> IO ()
 writeInsertFunctionCode modPrefix folderName tbl modules = do
   h <- openFile (T.unpack $ folderName <> "/" <> "FunctionTable.hs") WriteMode
   hPutModuleLn h (modPrefix <> ".FunctionTable") modules
-               
+
   let inserts = insertBackendsCode h tbl
   body <- runQ $ doE (map noBindS inserts)
   let decl = FunD (mkName "functions") [Clause [] (NormalB body) []]
-
+  
   T.hPutStrLn h (myPprint decl)
+  hFlush h
 
 hPutExprLn :: Handle -> Table -> Symbol -> [Symbol] -> Int -> [SExpr] -> IO ()
 hPutExprLn h tbl moduleName mods count es = do
@@ -254,6 +255,8 @@ fromFiles files modPrefix folderName = do
   (tbl, moduleNames, numModules) <- getTable modPrefix folderName files
   writeInsertFunctionCode modPrefix folderName tbl moduleNames
 
+  T.putStrLn $ folderName <> "/Bootstrap.hs"
+
   h <- openFile (T.unpack $ folderName <> "/Bootstrap.hs") WriteMode  
   hPutModuleLn h (modPrefix <> ".Bootstrap") (modPrefix <> ".FunctionTable" : moduleNames)
   body <- runQ $ doE (noBindS (appsE [funcExpT "functions"]) :
@@ -262,5 +265,6 @@ fromFiles files modPrefix folderName = do
           
   let decl = FunD (mkName "bootstrap") [Clause [] (NormalB body) []]
   T.hPutStrLn h (myPprint decl)
+  hFlush h
 
 writeShenSource = fromFiles klFiles "Backend" "Shentong/Backend"
