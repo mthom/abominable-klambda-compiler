@@ -12,8 +12,8 @@ Abominable is responsible for generating the backend of [[https://github.com/mth
 Haskell port of the Shen programming language.
 
 Abominable is incapable of generating code that can be parsed with any
-GHC version later than 7.6.3. This seems to be due to a lingering bug
-in Template Haskell.
+GHC version later than 7.6.3. This is definitely due to a lingering
+bug in Template Haskell that someone really ought to correct.
 
 * Usage
 
@@ -38,5 +38,5 @@ klFiles = [ "klambda/toplevel.kl"
 
 All paths are relative to the directory in which Abominable is stored.
 The Backend *.hs files are output to Shentong/Backend, and if that
-directly doesn't already exist in the pwd, Abominable throws an
+directory doesn't already exist in the pwd, Abominable throws an
 exception and returns to the command line.
