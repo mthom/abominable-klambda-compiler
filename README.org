@@ -9,7 +9,7 @@ March 2015, and is a cautionary lesson in the importance of
 documenting your code as a key to later understanding of that code.
 
 #+CAPTION: (pictured)
-[[http://vignette1.wikia.nocookie.net/headhuntersholosuite/images/d/da/Lexx_3x03_001.jpg/revision/latest?cb%3D20110609174657][Abominable]]
+[[[[http://vignette1.wikia.nocookie.net/headhuntersholosuite/images/d/da/Lexx_3x03_001.jpg/revision/latest?cb=20110609174657]]]]
 
 Abominable is responsible for generating the backend of [[https://github.com/mthom/shentong][Shentong]], a
 Haskell port of the Shen programming language.
